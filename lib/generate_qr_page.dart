@@ -322,6 +322,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
             ),
           ),
           Container(
+              // TODO: add label next to dropdown
               // Pickup From Dropdown
               margin: const EdgeInsets.all(25),
               alignment: Alignment.centerLeft,
@@ -409,6 +410,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
             ),
           ),
           Container(
+              // TODO: add label to dropdown
               // Robot Status Dropdown
               margin: const EdgeInsets.all(25),
               alignment: Alignment.centerLeft,
