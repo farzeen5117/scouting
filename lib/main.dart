@@ -13,22 +13,26 @@ class MyApp extends StatelessWidget {
       title: appTitle,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: const Text('Reefscape Scouting Form')),
-        body: const GenerateQRCode(),
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+            title: const Text('Reefscape Scouting Form'), centerTitle: true),
+        body: SingleChildScrollView(
+          child: GenerateQRCode(),
+        ),
       ),
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Color.fromARGB(255, 255, 204, 128),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black,
-          foregroundColor: Colors.orange,
+          backgroundColor: Color.fromARGB(255, 255, 204, 128),
+          foregroundColor: Colors.black,
         ),
         inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(color: Colors.orange),
+          labelStyle: TextStyle(color: Colors.black),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.orange),
+            borderSide: BorderSide(color: Colors.black),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color.fromARGB(255, 121, 72, 0)),
+            borderSide: BorderSide(color: Colors.black),
           ),
         ),
       ),
