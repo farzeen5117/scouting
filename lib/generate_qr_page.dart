@@ -30,6 +30,14 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
   ];
   TextEditingController finalController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String dropdownValue = 'Not Attempted';
+  var pickupFrom = ['Not Attempted', 'Coral Station', 'Floor', 'Both'];
+  var finalRobotStatus = [
+    'Not Attempted',
+    'Parked',
+    'Shallow Cage',
+    'Deep Cage'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -242,11 +250,34 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                   border: OutlineInputBorder(), labelText: 'Net Score'),
             ),
           ),
+          Container(
+              margin: const EdgeInsets.all(20),
+              child: DropdownButton(
+                value: dropdownValue,
+                icon: const Icon(Icons.arrow_drop_down),
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.black,
+                ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownValue = newValue!;
+                  });
+                },
+                items: pickupFrom.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              )),
           //This button when pressed navigates to QR code generation
           ElevatedButton(
               onPressed: () async {
                 finalController.text =
-                    '${controllers[0].text}\t${controllers[1].text}\t${controllers[2].text}\t${controllers[3].text}';
+                    '${controllers[0].text}\t${controllers[1].text}\t${controllers[2].text}\t${controllers[3].text}\t${controllers[4].text}\t${controllers[5].text}\t${controllers[6].text}\t${controllers[7].text}\t${controllers[8].text}\t${controllers[9].text}\t${controllers[10].text}\t${controllers[11].text}\t${controllers[12].text}\t${controllers[13].text}\t${controllers[14].text}\t${controllers[15].text}';
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('data: ${finalController.text}'),
