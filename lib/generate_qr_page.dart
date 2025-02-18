@@ -323,6 +323,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
           ),
           Container(
               // TODO: add label next to dropdown
+              // TODO: FIX THE DROPDOWN
               // Pickup From Dropdown
               margin: const EdgeInsets.all(25),
               alignment: Alignment.centerLeft,
