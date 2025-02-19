@@ -47,8 +47,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
   int _start = 0;
 
   void _startStopwatch() {
-    _start = 0;
-    _timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _start++;
         controllers[17].text = _formatTime(_start);
@@ -70,11 +69,10 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
     });
   }
 
-  String _formatTime(int milliseconds) {
-    final int minutes = milliseconds ~/ 60000;
-    final int remainingSeconds = (milliseconds % 60) ~/ 1000;
-    final int remainingMilliseconds = milliseconds % 1000;
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}:${remainingMilliseconds.toString().padLeft(3, '0')}';
+  String _formatTime(int seconds) {
+    final int minutes = seconds ~/ 60;
+    final int remainingSeconds = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
   @override
@@ -329,7 +327,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
               alignment: Alignment.centerLeft,
               child: DropdownButton(
                 value: pickupFromValue,
-                icon: const Icon(Icons.arrow_drop_down),
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 elevation: 16,
                 style: const TextStyle(color: Colors.black),
                 dropdownColor: Colors.white,
@@ -417,7 +415,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
               alignment: Alignment.centerLeft,
               child: DropdownButton(
                 value: robotStatusValue,
-                icon: const Icon(Icons.arrow_drop_down),
+                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                 elevation: 16,
                 style: const TextStyle(color: Colors.black),
                 dropdownColor: Colors.white,

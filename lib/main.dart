@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.orange,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 183, 75),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.orange,
+          backgroundColor: Color.fromARGB(255, 255, 183, 75),
           foregroundColor: Colors.black,
         ),
         inputDecorationTheme: const InputDecorationTheme(
