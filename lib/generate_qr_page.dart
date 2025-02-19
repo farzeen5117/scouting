@@ -471,11 +471,6 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                   onPressed: () async {
                     finalController.text =
                         '${controllers[0].text}\t${controllers[1].text}\t${controllers[2].text}\t${controllers[3].text}\t${controllers[4].text}\t${controllers[5].text}\t${controllers[6].text}\t${controllers[7].text}\t${controllers[8].text}\t${controllers[9].text}\t${controllers[10].text}\t${controllers[11].text}\t${controllers[12].text}\t${controllers[13].text}\t${controllers[14].text}\t${controllers[15].text}\t$pickupFromValue\t${controllers[16].text}\t${controllers[17].text}\t$robotStatusValue';
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('data: ${finalController.text}'),
-                      ),
-                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
