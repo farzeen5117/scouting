@@ -33,7 +33,8 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
   ];
   TextEditingController finalController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String dropdownValue = 'Not Attempted';
+  String pickupFromValue = 'Not Attempted';
+  String robotStatusValue = 'Not Attempted';
   var pickupFrom = ['Not Attempted', 'Coral Station', 'Floor', 'Both'];
   var finalRobotStatus = [
     'Not Attempted',
@@ -323,12 +324,11 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
           ),
           Container(
               // TODO: add label next to dropdown
-              // TODO: FIX THE DROPDOWN
               // Pickup From Dropdown
               margin: const EdgeInsets.all(25),
               alignment: Alignment.centerLeft,
               child: DropdownButton(
-                value: dropdownValue,
+                value: pickupFromValue,
                 icon: const Icon(Icons.arrow_drop_down),
                 elevation: 16,
                 style: const TextStyle(color: Colors.black),
@@ -339,7 +339,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                 ),
                 onChanged: (String? newValue) {
                   setState(() {
-                    dropdownValue = newValue!;
+                    pickupFromValue = newValue!;
                   });
                 },
                 items: pickupFrom.map<DropdownMenuItem<String>>((String value) {
@@ -416,7 +416,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
               margin: const EdgeInsets.all(25),
               alignment: Alignment.centerLeft,
               child: DropdownButton(
-                value: dropdownValue,
+                value: robotStatusValue,
                 icon: const Icon(Icons.arrow_drop_down),
                 elevation: 16,
                 style: const TextStyle(color: Colors.black),
@@ -427,7 +427,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                 ),
                 onChanged: (String? newValue) {
                   setState(() {
-                    dropdownValue = newValue!;
+                    robotStatusValue = newValue!;
                   });
                 },
                 items: finalRobotStatus
