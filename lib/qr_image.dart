@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QRImage extends StatelessWidget {
-  const QRImage(this.controller, {super.key});
+  final TextEditingController finalController;
+  final String matchNumber;
+  final String teamNumber;
 
-  final TextEditingController controller;
+  QRImage(this.finalController, this.matchNumber, this.teamNumber);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QR Code'),
+        title: Text('Match $matchNumber - Team $teamNumber'),
         centerTitle: true,
       ),
       body: Center(
         child: QrImageView(
-          data: controller.text,
+          data: finalController.text,
           size: 280,
           // You can include embeddedImageStyle Property if you
           //wanna embed an image from your Asset folder
