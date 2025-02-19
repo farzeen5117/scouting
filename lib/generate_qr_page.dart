@@ -1,3 +1,6 @@
+// TODO: make QR Code search page
+// TODO: find a way to wrap all the containers in a function to reduce code duplication
+
 import 'package:flutter/material.dart';
 import 'qr_image.dart';
 import 'package:flutter/services.dart';
