@@ -1,10 +1,13 @@
 // TODO: make QR Code search page
 // TODO: find a way to wrap all the containers in a function to reduce code duplication
+// TODO: add text field validation
 
 import 'package:flutter/material.dart';
 import 'qr_image.dart';
+import 'qr_code_search.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+import 'database_helper.dart';
 
 class GenerateQRCode extends StatefulWidget {
   const GenerateQRCode({super.key});
@@ -464,7 +467,19 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                       ),
                     ],
                   )),
-              //This button when pressed navigates to QR code generation
+              Container(
+                // Comments
+                margin: const EdgeInsets.all(20),
+                alignment: Alignment.centerLeft,
+                child: TextField(
+                  controller: TextEditingController(),
+                  cursorColor: Colors.black,
+                  style: const TextStyle(color: Colors.black),
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), labelText: 'Comments'),
+                ),
+              ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
@@ -474,6 +489,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                   onPressed: () async {
                     finalController.text =
                         '${controllers[0].text}\t${controllers[1].text}\t${controllers[2].text}\t${controllers[3].text}\t${controllers[4].text}\t${controllers[5].text}\t${controllers[6].text}\t${controllers[7].text}\t${controllers[8].text}\t${controllers[9].text}\t${controllers[10].text}\t${controllers[11].text}\t${controllers[12].text}\t${controllers[13].text}\t${controllers[14].text}\t${controllers[15].text}\t$pickupFromValue\t${controllers[16].text}\t${controllers[17].text}\t$robotStatusValue';
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -483,8 +499,32 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                         }),
                       ),
                     );
+
+                    // Save QR code to database
+                    await DatabaseHelper().insertQRCode({
+                      'matchNumber': controllers[1].text,
+                      'teamNumber': controllers[2].text,
+                      'qrCode': QRImage(finalController.text),
+                    });
                   },
                   child: const Text('GENERATE QR CODE')),
+              const SizedBox(height: 5),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Color.fromARGB(255, 255, 183, 75),
+                  padding: const EdgeInsets.all(20),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QRCodeSearch(),
+                    ),
+                  );
+                },
+                child: const Text('SEARCH QR CODES'),
+              ),
             ],
           ),
         ),
