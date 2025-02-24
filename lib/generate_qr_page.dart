@@ -7,7 +7,6 @@ import 'qr_image.dart';
 import 'qr_code_search.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'database_helper.dart';
 
 class GenerateQRCode extends StatefulWidget {
   const GenerateQRCode({super.key});
@@ -36,6 +35,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
     TextEditingController(), // 15 - Teleop Net Score
     TextEditingController(), // 16 - Scored in Opponent Processor
     TextEditingController(), // 17 - Barge Time
+    TextEditingController(), // 18 - Comments
   ];
   TextEditingController finalController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -472,7 +472,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                 margin: const EdgeInsets.all(20),
                 alignment: Alignment.centerLeft,
                 child: TextField(
-                  controller: TextEditingController(),
+                  controller: controllers[18],
                   cursorColor: Colors.black,
                   style: const TextStyle(color: Colors.black),
                   maxLines: 3,
@@ -488,7 +488,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                   ),
                   onPressed: () async {
                     finalController.text =
-                        '${controllers[0].text}\t${controllers[1].text}\t${controllers[2].text}\t${controllers[3].text}\t${controllers[4].text}\t${controllers[5].text}\t${controllers[6].text}\t${controllers[7].text}\t${controllers[8].text}\t${controllers[9].text}\t${controllers[10].text}\t${controllers[11].text}\t${controllers[12].text}\t${controllers[13].text}\t${controllers[14].text}\t${controllers[15].text}\t$pickupFromValue\t${controllers[16].text}\t${controllers[17].text}\t$robotStatusValue';
+                        '${controllers[0].text}\t${controllers[1].text}\t${controllers[2].text}\t${controllers[3].text}\t${controllers[4].text}\t${controllers[5].text}\t${controllers[6].text}\t${controllers[7].text}\t${controllers[8].text}\t${controllers[9].text}\t${controllers[10].text}\t${controllers[11].text}\t${controllers[12].text}\t${controllers[13].text}\t${controllers[14].text}\t${controllers[15].text}\t$pickupFromValue\t${controllers[16].text}\t${controllers[17].text}\t$robotStatusValue\t${controllers[18].text}';
 
                     Navigator.push(
                       context,
@@ -499,13 +499,6 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                         }),
                       ),
                     );
-
-                    // Save QR code to database
-                    await DatabaseHelper().insertQRCode({
-                      'matchNumber': controllers[1].text,
-                      'teamNumber': controllers[2].text,
-                      'qrCode': QRImage(finalController.text),
-                    });
                   },
                   child: const Text('GENERATE QR CODE')),
               const SizedBox(height: 5),

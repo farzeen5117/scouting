@@ -6,7 +6,8 @@ class QRImage extends StatelessWidget {
   final String matchNumber;
   final String teamNumber;
 
-  QRImage(this.finalController, this.matchNumber, this.teamNumber);
+  const QRImage(this.finalController, this.matchNumber, this.teamNumber,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
