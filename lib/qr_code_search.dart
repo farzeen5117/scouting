@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
 class QRCodeSearch extends StatefulWidget {
   const QRCodeSearch({super.key});
@@ -10,19 +11,28 @@ class QRCodeSearch extends StatefulWidget {
 class QRCodeSearchState extends State<QRCodeSearch> {
   final TextEditingController _searchController = TextEditingController();
   String _searchType = 'Match Number';
-  final List<Map<String, String>> _qrCodes = [];
-  List<Map<String, String>> _searchResults = [];
+  List<Map<String, dynamic>> _searchResults = [];
 
-  void _search() {
+  Future<void> _search() async {
+    final database = await openDatabase('qr_codes.db');
+    List<Map<String, dynamic>> results;
+    if (_searchType == 'Match Number') {
+      results = await database.query(
+        'qr_codes',
+        where: 'matchNumber = ?',
+        whereArgs: [_searchController.text],
+      );
+    } else {
+      results = await database.query(
+        'qr_codes',
+        where: 'teamNumber = ?',
+        whereArgs: [_searchController.text],
+      );
+    }
     setState(() {
-      _searchResults = _qrCodes.where((qrCode) {
-        if (_searchType == 'Match Number') {
-          return qrCode['matchNumber'] == _searchController.text;
-        } else {
-          return qrCode['teamNumber'] == _searchController.text;
-        }
-      }).toList();
+      _searchResults = results;
     });
+    await database.close();
   }
 
   @override
@@ -89,11 +99,16 @@ class QRCodeSearchState extends State<QRCodeSearch> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.black),
-                        'Match: ${_searchResults[index]['matchNumber']} - Team: ${_searchResults[index]['teamNumber']}'),
-                    subtitle:
-                        Text('QR Code: ${_searchResults[index]['qrCode']}'),
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
+                      'Match: ${_searchResults[index]['matchNumber']} - Team: ${_searchResults[index]['teamNumber']}',
+                    ),
+                    subtitle: _searchResults[index]['qrCode'] != null
+                        ? Image.memory(
+                            _searchResults[index]['qrCode'],
+                            height: 100,
+                            width: 100,
+                          )
+                        : const Text('No QR Code available'),
                   );
                 },
               ),
