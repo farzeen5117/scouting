@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
+import 'db.dart';
 
 class QRCodeSearch extends StatefulWidget {
   const QRCodeSearch({super.key});
@@ -14,25 +15,21 @@ class QRCodeSearchState extends State<QRCodeSearch> {
   List<Map<String, dynamic>> _searchResults = [];
 
   Future<void> _search() async {
-    final database = await openDatabase('qr_codes.db');
-    List<Map<String, dynamic>> results;
+    // List<Map<String, dynamic>> allQRCodes = await retrieveQRCodes();
+    // List<Map<String, dynamic>> results;
     if (_searchType == 'Match Number') {
-      results = await database.query(
-        'qr_codes',
-        where: 'matchNumber = ?',
-        whereArgs: [_searchController.text],
-      );
+      retrieveQRCodes();
+      /* results = allQRCodes
+          .where((qrCode) => qrCode['matchNumber'] == _searchController.text)
+          .toList(); */
     } else {
-      results = await database.query(
-        'qr_codes',
-        where: 'teamNumber = ?',
-        whereArgs: [_searchController.text],
-      );
+      results = allQRCodes
+          .where((qrCode) => qrCode['teamNumber'] == _searchController.text)
+          .toList();
     }
     setState(() {
       _searchResults = results;
     });
-    await database.close();
   }
 
   @override
