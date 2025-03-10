@@ -1,6 +1,4 @@
 // TODO: make QR Code search page
-// TODO: find a way to wrap all the containers in a function to reduce code duplication
-// TODO: add text field validation
 
 import 'package:flutter/material.dart';
 import 'qr_image.dart';
@@ -81,6 +79,40 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
     return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
+  Widget buildTextFieldContainer(int index, String labelText,
+      {TextInputType keyboardType = TextInputType.text,
+      List<TextInputFormatter>? inputFormatters}) {
+    return Container(
+      margin: const EdgeInsets.all(20),
+      child: TextField(
+        controller: controllers[index],
+        cursorColor: Colors.black,
+        style: const TextStyle(color: Colors.black),
+        keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: labelText,
+        ),
+      ),
+    );
+  }
+
+  Widget buildSectionTitle(String title) {
+    return Container(
+      margin: const EdgeInsets.all(20),
+      alignment: Alignment.center,
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 25,
+          color: Colors.black,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -90,247 +122,59 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                // Scouter's Name
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[0],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Scouter\'s Name'),
-                ),
-              ),
-              Container(
-                // Match Number
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[1],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+              buildTextFieldContainer(0, 'Scouter\'s Name'),
+              buildTextFieldContainer(1, 'Match Number',
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(3)
-                  ],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Match Number'),
-                ),
-              ),
-              Container(
-                // Team Number
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[2],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  ]),
+              buildTextFieldContainer(2, 'Team Number',
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(5)
-                  ],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Team Number'),
-                ),
-              ),
-              Container(
-                // Auton Section
-                margin: const EdgeInsets.all(20),
-                alignment: Alignment.center,
-                child: Text(
-                  'Auton:',
-                  style: const TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
-                // Leave Starting Line
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[3],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
-                  inputFormatters: [LengthLimitingTextInputFormatter(3)],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Leave Starting Line (yes/no)'),
-                ),
-              ),
-              Container(
-                // Auton Coral L1
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[4],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  ]),
+              buildSectionTitle('Auton:'),
+              buildTextFieldContainer(3, 'Leave Starting Line (yes/no)',
+                  inputFormatters: [LengthLimitingTextInputFormatter(3)]),
+              buildTextFieldContainer(4, 'Coral L1',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L1'),
-                ),
-              ),
-              Container(
-                // Auton Coral L2
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[5],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(5, 'Coral L2',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L2'),
-                ),
-              ),
-              Container(
-                // Auton Coral L3
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[6],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(6, 'Coral L3',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L3'),
-                ),
-              ),
-              Container(
-                // Auton Coral L4
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[7],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(7, 'Coral L4',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L4'),
-                ),
-              ),
-              Container(
-                // Auton Processor Score
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[8],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(8, 'Processor Score',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Processor Score'),
-                ),
-              ),
-              Container(
-                // Auton Net Score
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[9],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(9, 'Net Score',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Net Score'),
-                ),
-              ),
-              Container(
-                // Teleop Section
-                margin: const EdgeInsets.all(20),
-                alignment: Alignment.center,
-                child: Text(
-                  'Teleop:',
-                  style: const TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Container(
-                // Teleop Coral L1
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[10],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildSectionTitle('Teleop:'),
+              buildTextFieldContainer(10, 'Coral L1',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L1'),
-                ),
-              ),
-              Container(
-                // Teleop Coral L2
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[11],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(11, 'Coral L2',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L2'),
-                ),
-              ),
-              Container(
-                // Teleop Coral L3
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[12],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(12, 'Coral L3',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L3'),
-                ),
-              ),
-              Container(
-                // Teleop Coral L4
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[13],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(13, 'Coral L4',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Coral L4'),
-                ),
-              ),
-              Container(
-                // Teleop Processor Score
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[14],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(14, 'Processor Score',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Processor Score'),
-                ),
-              ),
-              Container(
-                // Teleop Net Score
-                margin: const EdgeInsets.all(20),
-                child: TextField(
-                  controller: controllers[15],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
+              buildTextFieldContainer(15, 'Net Score',
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'Net Score'),
-                ),
-              ),
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly]),
               Container(
                   // Pickup From Dropdown
                   margin: const EdgeInsets.all(25),
@@ -368,33 +212,10 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                       ),
                     ],
                   )),
-              Container(
-                // Scored in Opponent Processor
-                margin: const EdgeInsets.all(20),
-                alignment: Alignment.centerLeft,
-                child: TextField(
-                  controller: controllers[16],
-                  cursorColor: Colors.black,
-                  style: const TextStyle(color: Colors.black),
-                  inputFormatters: [LengthLimitingTextInputFormatter(3)],
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Scored in Opponent Processor (yes/no)'),
-                ),
-              ),
-              Container(
-                // Endgame Section
-                margin: const EdgeInsets.all(20),
-                alignment: Alignment.center,
-                child: Text(
-                  'Endgame:',
-                  style: const TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              buildTextFieldContainer(
+                  16, 'Scored in Opponent Processor (yes/no)',
+                  inputFormatters: [LengthLimitingTextInputFormatter(3)]),
+              buildSectionTitle('Endgame:'),
               Container(
                 // Barge Time Stopwatch
                 margin: const EdgeInsets.all(20),

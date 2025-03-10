@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'db.dart';
 
 class QRCodeSearch extends StatefulWidget {
@@ -15,17 +14,11 @@ class QRCodeSearchState extends State<QRCodeSearch> {
   List<Map<String, dynamic>> _searchResults = [];
 
   Future<void> _search() async {
-    // List<Map<String, dynamic>> allQRCodes = await retrieveQRCodes();
-    // List<Map<String, dynamic>> results;
+    List<Map<String, dynamic>> results;
     if (_searchType == 'Match Number') {
-      retrieveQRCodes();
-      /* results = allQRCodes
-          .where((qrCode) => qrCode['matchNumber'] == _searchController.text)
-          .toList(); */
+      results = await retrieveQRCodes(matchNumber: _searchController.text);
     } else {
-      results = allQRCodes
-          .where((qrCode) => qrCode['teamNumber'] == _searchController.text)
-          .toList();
+      results = await retrieveQRCodes(teamNumber: _searchController.text);
     }
     setState(() {
       _searchResults = results;

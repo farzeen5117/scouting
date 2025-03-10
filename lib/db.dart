@@ -21,10 +21,30 @@ Future<void> insertQRCode(
 }
 
 Future<List<Map<String, dynamic>>> retrieveQRCodes(
-    matchNumber, teamNumber) async {
+    {String? matchNumber, String? teamNumber}) async {
   final database = await openDatabase('qr_codes.db');
-  final List<Map<String, dynamic>> qrCodes =
-      await database.query('qr_codes', columns: matchNumber);
+  String whereClause = '';
+  List<String> whereArgs = [];
+
+  if (matchNumber != null && matchNumber.isNotEmpty) {
+    whereClause = 'matchNumber = ?';
+    whereArgs.add(matchNumber);
+  }
+
+  if (teamNumber != null && teamNumber.isNotEmpty) {
+    if (whereClause.isNotEmpty) {
+      whereClause += ' AND ';
+    }
+    whereClause += 'teamNumber = ?';
+    whereArgs.add(teamNumber);
+  }
+
+  final List<Map<String, dynamic>> qrCodes = await database.query(
+    'qr_codes',
+    where: whereClause.isNotEmpty ? whereClause : null,
+    whereArgs: whereArgs.isNotEmpty ? whereArgs : null,
+  );
+
   await database.close();
   return qrCodes;
 }
